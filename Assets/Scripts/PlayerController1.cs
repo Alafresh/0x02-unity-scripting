@@ -12,6 +12,7 @@ public class PlayerController1 : MonoBehaviour
     [SerializeField]
     public float speed;
     public Rigidbody rb;
+    
     private void Start()
     {
         Time.timeScale = 1f;
@@ -24,6 +25,7 @@ public class PlayerController1 : MonoBehaviour
             gameOver.SetActive(true);
             Debug.Log("Game Over!");
         }
+        
     }
     void FixedUpdate()
     {
@@ -35,6 +37,8 @@ public class PlayerController1 : MonoBehaviour
             rb.AddForce(-speed * Time.deltaTime, 0, 0);
         if (Input.GetKey("d"))
             rb.AddForce(speed * Time.deltaTime, 0, 0);
+        
+
     }
     void OnTriggerEnter(Collider other)
     {
@@ -44,14 +48,17 @@ public class PlayerController1 : MonoBehaviour
             score += 1;
             Debug.Log("Score: " + score);
         }
-        if (other.tag == "Trap")
+        if (other.tag == "Goal")
+        {
+            StartCoroutine(Win());
+        }
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Trap"))
         {
             health -= 1;
             Debug.Log("Health: " + health);
-        }
-        if (other.tag == "Goal" && score >= 20)
-        {
-            StartCoroutine(Win());
         }
     }
     IEnumerator Win()

@@ -22,6 +22,6 @@ public class UI : MonoBehaviour
     }
     public void PlayAgain()
     {
-        SceneManager.LoadScene("itchio");
+        SceneManager.LoadScene("Laberinto");
     }
 }
